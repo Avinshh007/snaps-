@@ -1,0 +1,6 @@
+{
+  "name": "Snap Stories",
+  "description": "Premium Instagram Reel Creator Booking Platform for Weddings, Engagements, Corporate Events & Special Occasions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
