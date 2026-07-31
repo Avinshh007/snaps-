@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EventCategory, TimeSlotId, Booking, EventLocation } from '../types';
 import { EVENT_CATEGORIES, TIME_SLOTS } from '../data/mockData';
@@ -68,6 +68,15 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
   const [date, setDate] = useState<string>(preselectedDate);
   const [timeSlot, setTimeSlot] = useState<TimeSlotId>(preselectedSlot);
 
+  useEffect(() => {
+    if (isOpen) {
+      setStep(1);
+      if (preselectedCategory) setEventType(preselectedCategory);
+      if (preselectedDate) setDate(preselectedDate);
+      if (preselectedSlot) setTimeSlot(preselectedSlot);
+    }
+  }, [isOpen, preselectedCategory, preselectedDate, preselectedSlot]);
+
   // Customer Details
   const [customerName, setCustomerName] = useState('Rahul Verma');
   const [customerPhone, setCustomerPhone] = useState('+91 98765 12345');
@@ -90,13 +99,17 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
     Haldi: 14999,
     Mehendi: 14999,
     Birthday: 11999,
+    'Birthday Celebration': 11999,
     Anniversary: 12999,
+    'Car shoot': 9999,
     'Baby Shower': 11999,
     Housewarming: 10999,
     'Corporate Event': 15999,
     'Product Shoot': 16999,
     'Fashion Shoot': 14999,
     'College Event': 11999,
+    Sangeet: 14999,
+    'Pre-Wedding Shoot': 16999,
     Other: 9999,
   };
 
@@ -293,11 +306,10 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                       key={ev}
                       type="button"
                       onClick={() => setEventType(ev)}
-                      className={`p-3.5 rounded-2xl border text-left transition flex flex-col justify-between h-24 ${
-                        eventType === ev
-                          ? 'bg-gradient-brand text-white border-amber-400 font-bold shadow-[0_0_20px_rgba(255,59,0,0.4)]'
-                          : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
-                      }`}
+                      className={`p-3.5 rounded-2xl border text-left transition flex flex-col justify-between h-24 ${eventType === ev
+                        ? 'bg-gradient-brand text-white border-amber-400 font-bold shadow-[0_0_20px_rgba(255,59,0,0.4)]'
+                        : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
+                        }`}
                     >
                       <PartyPopper className={`w-4 h-4 ${eventType === ev ? 'text-white' : 'text-amber-400'}`} />
                       <div>
@@ -325,11 +337,10 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                         key={pkg.label}
                         type="button"
                         onClick={() => setDuration(pkg.label)}
-                        className={`p-3 rounded-2xl border text-left transition ${
-                          duration === pkg.label
-                            ? 'bg-gradient-brand text-white border-amber-400 font-bold'
-                            : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
-                        }`}
+                        className={`p-3 rounded-2xl border text-left transition ${duration === pkg.label
+                          ? 'bg-gradient-brand text-white border-amber-400 font-bold'
+                          : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
+                          }`}
                       >
                         <div className="font-space text-xs font-bold">{pkg.label}</div>
                         <div className="text-[10px] text-neutral-400 mt-0.5">{pkg.detail}</div>
@@ -385,11 +396,10 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                         key={d}
                         type="button"
                         onClick={() => setDate(d)}
-                        className={`p-2.5 rounded-2xl border text-center transition ${
-                          date === d
-                            ? 'bg-gradient-brand text-white border-amber-400 font-bold shadow-[0_0_15px_rgba(255,59,0,0.4)]'
-                            : 'bg-black/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
-                        }`}
+                        className={`p-2.5 rounded-2xl border text-center transition ${date === d
+                          ? 'bg-gradient-brand text-white border-amber-400 font-bold shadow-[0_0_15px_rgba(255,59,0,0.4)]'
+                          : 'bg-black/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
+                          }`}
                       >
                         <div className="text-xs font-bold">{d.slice(8)}</div>
                         <div className="text-[10px] text-neutral-400 uppercase">{d.slice(5, 7)} / 2026</div>
@@ -410,11 +420,10 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                         key={slot.id}
                         type="button"
                         onClick={() => setTimeSlot(slot.id)}
-                        className={`p-4 rounded-2xl border text-left transition flex items-center justify-between ${
-                          timeSlot === slot.id
-                            ? 'bg-gradient-brand text-white border-amber-400 font-bold shadow-[0_0_20px_rgba(255,59,0,0.4)]'
-                            : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
-                        }`}
+                        className={`p-4 rounded-2xl border text-left transition flex items-center justify-between ${timeSlot === slot.id
+                          ? 'bg-gradient-brand text-white border-amber-400 font-bold shadow-[0_0_20px_rgba(255,59,0,0.4)]'
+                          : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:border-neutral-700'
+                          }`}
                       >
                         <div className="flex items-center space-x-3">
                           <Clock className={`w-5 h-5 ${timeSlot === slot.id ? 'text-white' : 'text-amber-400'}`} />

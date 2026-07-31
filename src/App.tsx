@@ -61,7 +61,7 @@ export default function App() {
     }
   };
 
-  const handleOpenPackageBooking = (packageName: string, category: EventCategory, price: number) => {
+  const handleOpenPackageBooking = (packageName: string, category: EventCategory) => {
     setBookingPreselects({
       category,
     });
@@ -71,7 +71,14 @@ export default function App() {
   const handleQuickHeroFilter = (city: string, eventType: string) => {
     setHeroCityFilter(city);
     setHeroEventFilter(eventType);
-    handleNavigate('packages');
+    if (eventType) {
+      setBookingPreselects({
+        category: eventType as EventCategory,
+      });
+    } else {
+      setBookingPreselects({});
+    }
+    setIsBookingOpen(true);
   };
 
   const handleAddBooking = (newBooking: Booking) => {

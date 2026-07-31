@@ -100,9 +100,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenBooking }) => 
               Headquarters
             </h4>
             <div className="text-xs text-neutral-400 space-y-2 font-inter">
-              <p>📍 Bandra West, Mumbai, MH - 400050</p>
-              <p>✉️ concierge@snapstories.in</p>
-              <p>📞 +91 98765 43210 (24x7 Support)</p>
+              <p>📍 KAKINADA</p>
+              <p>✉️ bhargav@snapstories.in</p>
+              <p>📞 +91 9876543210 (24x7 Support)</p>
             </div>
             <button
               onClick={onOpenBooking}

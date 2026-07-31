@@ -6,18 +6,15 @@ import creator from "../assets/reels/creator.jpg"
 import { Creator, PackagePreset, GalleryItem, Testimonial, FAQItem, Booking, EventCategory, TimeSlot } from '../types';
 
 export const CITIES = [
-  'Mumbai',
-  'Delhi NCR',
-  'Bengaluru',
-  'Hyderabad',
-  'Chennai',
-  'Kolkata',
-  'Jaipur',
-  'Goa',
-  'Pune',
-  'Ahmedabad',
-  'Chandigarh',
-  'Udaipur'
+  'Kakinada',
+  'Vijayawada',
+  'Visakhapatnam',
+  'Guntur',
+  'Ongole',
+  'Nellore',
+  'Anantapur',
+  'Tirupati',
+  'Hyderabad'
 ];
 
 export const EVENT_CATEGORIES: EventCategory[] = [
@@ -34,6 +31,7 @@ export const EVENT_CATEGORIES: EventCategory[] = [
   'Product Shoot',
   'Fashion Shoot',
   'College Event',
+  'Pre-Wedding Shoot',
   'Other'
 ];
 
@@ -382,8 +380,6 @@ export const PACKAGE_PRESETS: PackagePreset[] = [
     id: 'pkg-1',
     title: 'Wedding Reel Deluxe',
     category: 'Wedding',
-    price: 24999,
-    originalPrice: 32000,
     duration: '8 Hours Full Event Coverage',
     deliverables: [
       '3x 4K Master Instagram Reels (45-60s)',
@@ -400,8 +396,6 @@ export const PACKAGE_PRESETS: PackagePreset[] = [
     id: 'pkg-2',
     title: 'Engagement & Roka Magic',
     category: 'Engagement',
-    price: 14999,
-    originalPrice: 19000,
     duration: '4 Hours Ring Ceremony Coverage',
     deliverables: [
       '2x Aesthetic Ultra-HD Reels',
@@ -416,8 +410,6 @@ export const PACKAGE_PRESETS: PackagePreset[] = [
     id: 'pkg-3',
     title: 'Haldi & Mehendi Color Blast',
     category: 'Haldi',
-    price: 12999,
-    originalPrice: 16500,
     duration: '4 Hours Fun & Flowers Coverage',
     deliverables: [
       '2x High-Energy Beat Synced Reels',
@@ -428,26 +420,9 @@ export const PACKAGE_PRESETS: PackagePreset[] = [
     image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'
   },
   {
-    id: 'pkg-4',
-    title: 'Corporate Summit & Keynote',
-    category: 'Corporate Event',
-    price: 18999,
-    originalPrice: 24000,
-    duration: '6 Hours Conference / Launch',
-    deliverables: [
-      '2x LinkedIn & IG Professional Reels',
-      'Speaker Highlights & Crowd Energy',
-      'Custom Subtitles & Brand Watermark',
-      '48-Hour Turnaround'
-    ],
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80'
-  },
-  {
     id: 'pkg-5',
     title: 'Luxury Birthday Bash',
     category: 'Birthday',
-    price: 9999,
-    originalPrice: 13500,
     duration: '3 Hours Evening Party',
     deliverables: [
       '1x High-Energy Party Hype Reel',
@@ -460,8 +435,6 @@ export const PACKAGE_PRESETS: PackagePreset[] = [
     id: 'pkg-6',
     title: 'Temple Event & Seva Reel',
     category: 'Other',
-    price: 11999,
-    originalPrice: 15000,
     duration: '4 Hours Sacred Event Coverage',
     deliverables: [
       '1x Devotional High-Definition Reel',
@@ -471,26 +444,9 @@ export const PACKAGE_PRESETS: PackagePreset[] = [
     image: 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&fit=crop&w=800&q=80'
   },
   {
-    id: 'pkg-7',
-    title: 'FPV Drone Reel Director',
-    category: 'Wedding',
-    price: 29999,
-    originalPrice: 38000,
-    duration: '6 Hours Aerial Focus',
-    deliverables: [
-      '2x FPV Indoor/Outdoor Flythrough Reels',
-      '1x Cinema Ground Reel',
-      '4K 60fps Ultra Smooth Raw Footage'
-    ],
-    badge: 'Exclusive',
-    image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80'
-  },
-  {
     id: 'pkg-8',
     title: 'Baby Shower & Gender Reveal',
     category: 'Baby Shower',
-    price: 10999,
-    originalPrice: 14000,
     duration: '3 Hours Celebration Coverage',
     deliverables: [
       '1x Emotionally Touched Reel',
@@ -516,7 +472,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'g-2',
     title: 'Night sangeet',
-    category: 'Haldi',
+    category: 'Sangeet',
     creatorName: 'Snap stories',
     creatorAvatar: creator,
     thumbnail: wedding2,
@@ -527,7 +483,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'g-3',
     title: 'Baby girl Birthday Celebration',
-    category: 'Wedding',
+    category: 'Birthday',
     creatorName: 'Vikramaditya Roy',
     creatorAvatar: creator,
     thumbnail: babyday,
@@ -538,7 +494,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'g-4',
     title: 'Luxary on wheels range rover',
-    category: 'Wedding',
+    category: 'Car shoot',
     creatorName: 'snap stories',
     creatorAvatar: creator,
     thumbnail: car,
@@ -632,7 +588,7 @@ export const FAQS: FAQItem[] = [
     id: 'faq-4',
     category: 'Equipment',
     question: 'What equipment do Snap Stories Reel Creators use?',
-    answer: 'Creators use top-of-the-line cinema setups including Sony FX3 / A7S III, RED Komodo, iPhone 15 Pro Max / 16 Pro, DJI Ronin RS3 gimbals, FPV Drones, and wireless studio audio systems.'
+    answer: 'APPLE Iphone 17 PRO MAX, Ipad MINI '
   },
   {
     id: 'faq-5',

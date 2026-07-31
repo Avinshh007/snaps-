@@ -5,7 +5,7 @@ import { CheckCircle2, Sparkles, Clock, ArrowRight, ShieldCheck, Flame } from 'l
 import { EventCategory } from '../types';
 
 interface PackagesProps {
-  onSelectPackageBooking: (packageName: string, category: EventCategory, price: number) => void;
+  onSelectPackageBooking: (packageName: string, category: EventCategory) => void;
 }
 
 export const Packages: React.FC<PackagesProps> = ({ onSelectPackageBooking }) => {
@@ -117,18 +117,14 @@ export const Packages: React.FC<PackagesProps> = ({ onSelectPackageBooking }) =>
                 </div>
                 <h3 className="font-space font-bold text-xl text-white mb-3">{pkg.title}</h3>
 
-                {/* Price Display */}
-                <div className="flex items-baseline space-x-2 mb-6 pb-6 border-b border-neutral-800/80">
-                  <span className="font-bebas text-4xl text-gradient font-bold">
-                    ₹{pkg.price.toLocaleString('en-IN')}
-                  </span>
-                  {pkg.originalPrice && (
-                    <span className="font-mono text-sm text-neutral-500 line-through">
-                      ₹{pkg.originalPrice.toLocaleString('en-IN')}
-                    </span>
-                  )}
-                  <span className="text-[10px] text-emerald-400 font-mono font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full ml-auto">
-                    25% ADVANCE LOCK
+                {/* Duration & Delivery Header */}
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-neutral-800/80">
+                  <div className="flex items-center space-x-2 text-neutral-300 text-xs font-mono">
+                    <Clock className="w-4 h-4 text-amber-400" />
+                    <span>{pkg.duration}</span>
+                  </div>
+                  <span className="text-[10px] text-amber-400 font-mono font-bold bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">
+                    EXPRESS DELIVERY
                   </span>
                 </div>
 
@@ -144,7 +140,7 @@ export const Packages: React.FC<PackagesProps> = ({ onSelectPackageBooking }) =>
 
                 {/* CTA Button */}
                 <button
-                  onClick={() => onSelectPackageBooking(pkg.title, pkg.category, pkg.price)}
+                  onClick={() => onSelectPackageBooking(pkg.title, pkg.category)}
                   className="w-full py-3.5 rounded-2xl bg-gradient-brand text-white font-space font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(255,59,0,0.3)] hover:brightness-110 active:scale-98 transition flex items-center justify-center space-x-2"
                 >
                   <span>Book This Package</span>

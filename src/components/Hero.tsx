@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Camera, Video, Sparkles, Star, MapPin, Play, ArrowRight, ShieldCheck, Flame } from 'lucide-react';
+import { Camera, Video, Sparkles, Star, MapPin, Play, ArrowRight, ShieldCheck, Flame, Calendar } from 'lucide-react';
 import { CITIES, EVENT_CATEGORIES } from '../data/mockData';
 
 interface HeroProps {
@@ -99,9 +99,9 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.8, delay: 0.1 }}
           className="font-bebas text-5xl sm:text-7xl lg:text-9xl tracking-tight leading-[0.9] text-white uppercase mb-6"
         >
-          Capture Every Moment. <br />
+          We Capture Instant. <br />
           <span className="text-gradient drop-shadow-[0_0_35px_rgba(255,59,0,0.4)]">
-            Create Viral Memories.
+            Reels For You.
           </span>
         </motion.h1>
 
@@ -122,17 +122,11 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.8, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
-          <button
-            onClick={onOpenBooking}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-brand text-white font-space font-bold text-sm uppercase tracking-wider shadow-[0_0_35px_rgba(255,59,0,0.4)] hover:shadow-[0_0_50px_rgba(255,59,0,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center space-x-2"
-          >
-            <span>Book Reel Shoot</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+
 
           <button
             onClick={onExploreCreators}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white border border-neutral-700 hover:border-amber-500 font-space font-medium text-sm tracking-wider transition-all duration-300 flex items-center justify-center space-x-2"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-brand text-white font-space font-bold text-sm uppercase tracking-wider shadow-[0_0_35px_rgba(255,59,0,0.4)] hover:shadow-[0_0_50px_rgba(255,59,0,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <Play className="w-4 h-4 text-amber-400 fill-amber-400" />
             <span>Explore Packages</span>
@@ -177,9 +171,11 @@ export const Hero: React.FC<HeroProps> = ({
 
             <button
               type="submit"
-              className="w-full bg-gradient-brand text-white font-space font-bold text-xs uppercase tracking-wider py-3 px-6 rounded-2xl hover:brightness-110 transition shadow-[0_0_20px_rgba(255,59,0,0.3)]"
+              className="w-full bg-gradient-brand text-white font-space font-bold text-xs uppercase tracking-wider py-3 px-6 rounded-2xl hover:brightness-110 transition shadow-[0_0_20px_rgba(255,59,0,0.3)] flex items-center justify-center space-x-2 group"
             >
-              Search Packages & Slots
+              <Calendar className="w-4 h-4 text-amber-300" />
+              <span>Book Creator</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </form>
         </motion.div>

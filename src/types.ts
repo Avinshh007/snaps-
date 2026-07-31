@@ -26,6 +26,7 @@ export type EventCategory =
   | 'College Event'
   | 'Birthday'
   | 'Sangeet'
+  | 'Pre-Wedding Shoot'
   | 'Other';
 
 export interface EventLocation {
@@ -103,8 +104,6 @@ export interface PackagePreset {
   id: string;
   title: string;
   category: EventCategory;
-  price: number;
-  originalPrice: number;
   duration: string;
   deliverables: string[];
   badge?: string;
@@ -124,6 +123,8 @@ export interface GalleryItem {
 
   isReel: boolean;
   aspectRatio: '16:9' | '9:16' | '1:1' | '4:5';
+  views?: string;
+  likes?: string;
 }
 
 export interface Booking {
