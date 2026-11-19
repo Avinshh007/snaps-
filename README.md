@@ -1,21 +1,27 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Snap Stories booking site
 
-# Run and deploy your AI Studio app
+React + Vite booking site. Booking details are prepared in the browser and opened in WhatsApp for the customer to review and send to the Snap Stories team. No booking backend or booking API is required.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/8b0eadbe-9ab9-4ed5-a6d2-6cc0bc87c719
+Install dependencies and start Vite:
 
-## Run Locally
+```sh
+npm install
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+Open `http://localhost:3000`.
 
+## WhatsApp booking flow
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
-# snaps-
+1. Complete the booking form and select **Confirm Booking Request**.
+2. The site synchronously opens WhatsApp to `+91 82474 32669` with a prefilled message containing the booking ID, customer contact details, event, package, date and time, guest count, venue, address, Google Maps link, and notes.
+3. Review the message and tap **Send** in WhatsApp. The site cannot send the message on the customer's behalf.
+4. Step 6 has **Send via WhatsApp** to reopen the same prefilled message, **Call Snap Stories**, and **Return to Home**.
+
+The message uses WhatsApp bold formatting and is limited to 1,500 characters. Long values are shortened to fit.
+
+## App environment values
+
+Copy `.env.example` to `.env` only if you need to configure the existing Gemini or AI Studio app values. WhatsApp booking does not require a token, server, or environment variables.

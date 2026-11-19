@@ -4,7 +4,6 @@ import { EventCategory, TimeSlotId, Booking, EventLocation } from '../types';
 import { EVENT_CATEGORIES, TIME_SLOTS } from '../data/mockData';
 import { EventLocationPicker } from './EventLocationPicker';
 import { WhatsAppService } from '../services/whatsappService';
-import { ApiService } from '../services/apiService';
 import { generateBookingId } from '../services/invoiceService';
 import {
   X,
@@ -20,7 +19,6 @@ import {
   PartyPopper,
   AlertCircle,
   MessageSquare,
-  Check,
   Send,
   ExternalLink,
   Users,
@@ -28,11 +26,6 @@ import {
   Download,
   Phone,
 } from 'lucide-react';
-
-const WHATSAPP_BUSINESS_NUMBER =
-  (import.meta as any).env?.VITE_WHATSAPP_NUMBER ||
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||
-  '919876543210';
 
 interface BookingSystemProps {
   isOpen: boolean;
@@ -71,6 +64,7 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
   useEffect(() => {
     if (isOpen) {
       setStep(1);
+      setCompletedBooking(null);
       if (preselectedCategory) setEventType(preselectedCategory);
       if (preselectedDate) setDate(preselectedDate);
       if (preselectedSlot) setTimeSlot(preselectedSlot);
@@ -146,7 +140,7 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
     if (step > 1) setStep(step - 1);
   };
 
-  const handleConfirmWhatsAppBooking = async () => {
+  const handleConfirmWhatsAppBooking = () => {
     setValidationError(null);
 
     // Validation check
@@ -166,24 +160,6 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
     const slotLabel = slotObj?.label || 'Evening Prime';
     const timeRange = slotObj?.timeRange || '4:00 PM - 8:00 PM';
     const creatorName = 'Snap Stories 4K Team';
-
-    const bookingPayload = {
-      customerName,
-      customerPhone,
-      customerEmail,
-      eventType,
-      package: duration,
-      duration,
-      date,
-      timeSlot: slotLabel,
-      timeRange,
-      venueName: eventLocation.venueName || 'Selected Venue',
-      formattedAddress: eventLocation.formattedAddress,
-      latitude: eventLocation.latitude,
-      longitude: eventLocation.longitude,
-      googleMapsUrl: eventLocation.googleMapsUrl,
-      notes: additionalNotes,
-    };
 
     // Create Booking object for local state display
     const newBookingObj: Booking = {
@@ -215,17 +191,14 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
       notes: additionalNotes,
     };
 
+    // Open WhatsApp during the user's click gesture, before any asynchronous work.
+    WhatsAppService.sendBookingToAdmin(newBookingObj);
     setCompletedBooking(newBookingObj);
-    onBookingConfirmed(newBookingObj);
-
-    // 1. Submit payload to Express Backend POST /api/booking via ApiService
     try {
-      await ApiService.submitBooking(newBookingObj);
-    } catch (err) {
-      console.warn('ApiService submit notice:', err);
+      onBookingConfirmed(newBookingObj);
+    } catch (error) {
+      console.warn('Could not update the local booking view:', error);
     }
-
-    // Move to step 6 (Booking Request Submitted Successfully)
     setStep(6);
   };
 
@@ -258,7 +231,7 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                 {step === 3 && '3. Customer Details'}
                 {step === 4 && '4. Where is your event?'}
                 {step === 5 && '5. Review Booking & Send'}
-                {step === 6 && '6. Booking Request Ready!'}
+                {step === 6 && '6. Booking Request Prepared'}
               </h2>
             </div>
 
@@ -638,27 +611,27 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                 </button>
 
                 <p className="text-[11px] text-neutral-400 text-center font-inter">
-                  Clicking "Confirm Booking Request" submits your shoot request to our team and dispatches instant WhatsApp notifications to our admin and your number.
+                  Clicking "Confirm Booking Request" opens WhatsApp with your booking details ready to send to our team.
                 </p>
               </div>
             )}
 
-            {/* STEP 6: BOOKING REQUEST SUBMITTED SUCCESS SCREEN */}
+            {/* STEP 6: BOOKING REQUEST PREPARED */}
             {step === 6 && completedBooking && (
               <div className="text-center space-y-6">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 text-emerald-400 flex items-center justify-center mx-auto glow-orange">
-                  <Check className="w-8 h-8 text-emerald-400" />
+                  <MessageSquare className="w-8 h-8 text-emerald-400" />
                 </div>
 
                 <div className="space-y-2">
                   <span className="bg-emerald-500/20 text-emerald-400 font-mono text-xs px-3.5 py-1 rounded-full border border-emerald-500/40 uppercase font-bold">
-                    ✅ Booking Request Submitted Successfully
+                    Booking request prepared
                   </span>
                   <h3 className="font-bebas text-3xl sm:text-4xl text-white mt-2">
                     Thank You, {completedBooking.customerName}!
                   </h3>
                   <p className="text-sm text-neutral-300 font-inter max-w-lg mx-auto leading-relaxed">
-                    Our team has received your booking request and will contact you shortly to confirm your shoot details.
+                    Booking request prepared. Tap Send in WhatsApp to deliver it to our team.
                   </p>
                   <p className="text-xs font-mono text-amber-400 pt-1">
                     Booking Reference: <span className="font-bold text-white bg-neutral-900 px-2.5 py-1 rounded-lg border border-neutral-800">{completedBooking.bookingNumber}</span>
@@ -675,7 +648,7 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                   <div className="flex justify-between items-center text-xs pb-3 border-b border-neutral-800">
                     <span className="text-neutral-400">Event & Schedule</span>
                     <span className="font-bold text-amber-400">
-                      {completedBooking.eventType} — {completedBooking.date} ({completedBooking.slotLabel})
+                      {completedBooking.eventType} - {completedBooking.date} ({completedBooking.slotLabel})
                     </span>
                   </div>
 
@@ -702,18 +675,11 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                   )}
                 </div>
 
-                <div className="p-4 rounded-2xl bg-neutral-900 border border-neutral-800 text-neutral-300 text-xs text-left flex items-start space-x-2.5">
-                  <MessageSquare className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    An automated WhatsApp notification has been prepared for our booking desk (8247432669). Contact us directly below.
-                  </div>
-                </div>
-
                 {/* Action Buttons */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   <button
                     type="button"
-                    onClick={() => window.open('tel:8247432669')}
+                    onClick={WhatsAppService.callAdmin}
                     className="py-3 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-space font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-1.5 shadow-lg"
                   >
                     <Phone className="w-4 h-4" />
@@ -722,11 +688,11 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => WhatsAppService.openWhatsAppLink('8247432669', WhatsAppService.generateCustomerMessage(completedBooking))}
+                    onClick={() => WhatsAppService.sendBookingToAdmin(completedBooking)}
                     className="py-3 px-3 rounded-2xl bg-emerald-700 hover:bg-emerald-600 text-white font-space font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-1.5 shadow-lg"
                   >
                     <MessageSquare className="w-4 h-4" />
-                    <span>WhatsApp Snap Stories</span>
+                    <span>Send via WhatsApp</span>
                   </button>
 
                   <button
@@ -772,7 +738,7 @@ export const BookingSystem: React.FC<BookingSystemProps> = ({
                   className="px-6 py-2.5 rounded-full bg-emerald-600 text-white text-xs font-bold font-space uppercase tracking-wider shadow-lg hover:bg-emerald-500 transition flex items-center space-x-2"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>Book via WhatsApp</span>
+                  <span>Confirm booking</span>
                 </button>
               )}
             </div>
